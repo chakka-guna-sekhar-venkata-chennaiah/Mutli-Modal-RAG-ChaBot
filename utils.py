@@ -5,10 +5,11 @@ from langchain.prompts import PromptTemplate
 from langchain.embeddings.base import Embeddings
 from langchain.llms.base import LLM
 from pydantic import BaseModel, Field
+imoprt streamlit as st
 
 
 client = OpenAI(
-    api_key="316ed125ba935fc09017c2fd965cf2abb9a21f64b714dc69e6ecbd29b635db98",
+    api_key=st.secrets['api_key'],
     base_url="https://llm.mdb.ai/"
 )
 
