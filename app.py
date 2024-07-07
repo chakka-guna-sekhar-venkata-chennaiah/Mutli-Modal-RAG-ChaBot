@@ -59,6 +59,9 @@ with st.sidebar:
                 ''',
                 unsafe_allow_html=True
             )
+  st.warning("Heads up, lovely users!** 🌟 Our clever bot uses RAG with LLMs which, while usually spot on, can sometimes dream up its own little facts. Just a cute reminder to double-check those extra imaginative responses! 💫")
+
+
 if page=='About':
    # Define custom style for the glowing text
     glowing_text_style = '''
