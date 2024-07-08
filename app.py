@@ -119,6 +119,7 @@ elif page=='MMR-PDF':
         # Display the glowing text using st.markdown
     st.markdown(glowing_text_style, unsafe_allow_html=True)
     st.markdown(f'<p class="glowing-text"> 🤖 Multi-Modal RAG ChatBot (PDF) 🤖</p>', unsafe_allow_html=True)
+    st.warning("Disclaimer: This project is built based on the attached PDF in the sidebar 👈 . If you wish to replicate it, please follow the tutorial links provided in the sidebar using your own resources.")
     user_input = st.text_area(label="Please feel free to ask me any questions related to the content of the PDF linked on the sidebar to your left 👈.")
 
     if st.button("Submit"):
@@ -176,6 +177,7 @@ else:
         # Display the glowing text using st.markdown
     st.markdown(glowing_text_style, unsafe_allow_html=True)
     st.markdown(f'<p class="glowing-text"> 🤖 Multi-Modal RAG ChatBot (Video) 🤖</p>', unsafe_allow_html=True)
+    st.warning("Disclaimer: This project is built based on the attached Video in the sidebar 👈 . If you wish to replicate it, please follow the tutorial links provided in the sidebar using your own resources.")
     user_input = st.text_area(label="Feel free to inquire about any information or topic present in the Video that is conveniently displayed on the sidebar to your left 👈.")
     if st.button("Submit"):
         
