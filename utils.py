@@ -5,11 +5,10 @@ from langchain.prompts import PromptTemplate
 from langchain.embeddings.base import Embeddings
 from langchain.llms.base import LLM
 from pydantic import BaseModel, Field
-import streamlit as st
 
 
 client = OpenAI(
-    api_key=st.secrets['api_key'],
+    api_key="316ed125ba935fc09017c2fd965cf2abb9a21f64b714dc69e6ecbd29b635db98",
     base_url="https://llm.mdb.ai/"
 )
 
@@ -57,6 +56,7 @@ mdb_chat_llm = MDBChatLLM(client=client)
 
 # Load the FAISS index with custom embeddings
 db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
+db1 = FAISS.load_local("faiss_index_audio", embeddings, allow_dangerous_deserialization=True)
 
 # Define the prompt template for the LLMChain
 prompt_template = """
@@ -88,3 +88,20 @@ def answer(question):
             relevant_images.append(d.metadata['original_content'])
     result = qa_chain.run({'context': context, 'question': question})
     return result, relevant_images
+
+
+# Query the vectorstore
+def answer1(question):
+    relevant_docs = db1.similarity_search(question)
+    context = ""
+    relevant_images = []
+    for d in relevant_docs:
+        if d.metadata['type'] == 'text':
+            context += '[text]' + d.metadata['original_content']
+        elif d.metadata['type'] == 'image':
+            context += '[image]' + d.page_content
+            relevant_images.append(d.metadata['original_content'])
+    result = qa_chain.run({'context': context, 'question': question})
+    return result, relevant_images
+
+
