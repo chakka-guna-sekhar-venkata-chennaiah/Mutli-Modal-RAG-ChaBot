@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 
 
 client = OpenAI(
-    api_key="316ed125ba935fc09017c2fd965cf2abb9a21f64b714dc69e6ecbd29b635db98",
+    api_key=st.secrets['api_key'],
     base_url="https://llm.mdb.ai/"
 )
 
