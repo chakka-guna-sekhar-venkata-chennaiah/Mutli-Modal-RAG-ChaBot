@@ -89,8 +89,20 @@ Our ultimate goal is to develop a Personalized Knowledge Model (PKM) and a dynam
 
 # 4. Demo (Detailed Explanation)
 <p align="center">
-  <a href="https://www.youtube.com/watch?v=eIqJR4UWiFM">Watch the demo video on YouTube</a>
+    <a href="https://www.youtube.com/watch?v=eIqJR4UWiFM">
+    </a>
 </p>
+
+
+For Quick Demo, Watch 👀 
+
+<p align="center">
+    <a href="https://github.com/chakka-guna-sekhar-venkata-chennaiah/Mutli-Modal-RAG-ChaBot/assets/110555361/60ff76f6-b9f5-42e8-87e9-fc5a66e6dc34">
+    </a>
+</p>
+
+
+
 
 
 # 5. Future Enhancements
