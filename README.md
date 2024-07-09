@@ -87,9 +87,9 @@ As mentioned earlier, this repository is built using the [Monuments of National 
 
 Our ultimate goal is to develop a Personalized Knowledge Model (PKM) and a dynamic multi-modal RAG system. This repository serves as a gateway to achieving that vision, and we welcome your support and contributions to help make it a reality.
 
-# 4. Demo
+# 4. Demo (Detailed Explanation)
 <p align="center">
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/eIqJR4UWiFM" frameborder="0" allowfullscreen></iframe>
+  <a href="https://www.youtube.com/watch?v=eIqJR4UWiFM">Watch the demo video on YouTube</a>
 </p>
 
 
