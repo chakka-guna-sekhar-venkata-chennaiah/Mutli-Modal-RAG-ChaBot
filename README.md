@@ -50,6 +50,17 @@ Imagine interacting with a system that understands and retrieves information acr
 * 🖥️ Streamlit 
 * 🗂️ FAISS
 
+Here are the code block images for creating custom LLMs and embedding functions using LangChain's chain base class and MDB.ai endpoints. This is one of the trickiest parts of the project.
+
+* Custom LLM function Code:-
+<img width="1470" alt="Screenshot 2024-07-09 at 8 00 06 PM" src="https://github.com/chakka-guna-sekhar-venkata-chennaiah/Mutli-Modal-RAG-ChaBot/assets/110555361/4ad3d2e8-0c5b-481a-9107-5a1ab2a110dc">
+
+* Custom Embedding function Code:-
+<img width="1470" alt="Screenshot 2024-07-09 at 7 59 24 PM 1" src="https://github.com/chakka-guna-sekhar-venkata-chennaiah/Mutli-Modal-RAG-ChaBot/assets/110555361/c3f06cd7-2a5e-4cac-90ea-bc5908423bc4">
+
+
+
+
 # 4. Steps to Run the Project
 
 ### Step 1: Clone the Repository
