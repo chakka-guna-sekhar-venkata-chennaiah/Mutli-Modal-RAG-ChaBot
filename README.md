@@ -90,18 +90,17 @@ Our ultimate goal is to develop a Personalized Knowledge Model (PKM) and a dynam
 # 4. Demo (Detailed Explanation)
 <p align="center">
     <a href="https://www.youtube.com/watch?v=eIqJR4UWiFM">
-       <img src="https://github.com/chakka-guna-sekhar-venkata-chennaiah/Mutli-Modal-RAG-ChaBot/assets/110555361/4471e1c3-91c7-478b-8dbd-bd48043ffd87"> 
+      <img src="https://github.com/chakka-guna-sekhar-venkata-chennaiah/Mutli-Modal-RAG-ChaBot/assets/110555361/4471e1c3-91c7-478b-8dbd-bd48043ffd87" style="width: 300px; height: 300px; object-fit: cover;">
     </a>
 </p>
-
 
 For Quick Demo, Watch 👀 
 
 <p align="center">
     <a href="https://github.com/chakka-guna-sekhar-venkata-chennaiah/Mutli-Modal-RAG-ChaBot/assets/110555361/60ff76f6-b9f5-42e8-87e9-fc5a66e6dc34">
+      <img src="https://github.com/chakka-guna-sekhar-venkata-chennaiah/Mutli-Modal-RAG-ChaBot/assets/110555361/45079b3d-4fb4-4a90-8b72-3e6df95a7061" style="width: 300px; height:300px; object-fit: cover;">
     </a>
 </p>
-![person-holding-youtube-icon](https://github.com/chakka-guna-sekhar-venkata-chennaiah/Mutli-Modal-RAG-ChaBot/assets/110555361/4471e1c3-91c7-478b-8dbd-bd48043ffd87)
 
 
 
