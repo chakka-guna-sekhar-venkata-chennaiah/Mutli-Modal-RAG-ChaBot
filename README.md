@@ -2,6 +2,8 @@
 <h3 align='center'>Building Essence Toward's Personalized Knowledge Model (PKM)</h3>
 <br>
 
+
+
 # 1. Introduction
 🌟 **Welcome to the Personal Knowledge Model (PKM) Project!** 🌟
 
