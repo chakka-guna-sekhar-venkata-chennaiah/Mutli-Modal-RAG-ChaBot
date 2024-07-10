@@ -2,6 +2,9 @@
 <h3 align='center'>Building Essence Toward's Personalized Knowledge Model (PKM)</h3>
 <br>
 
+<p align="center">
+  <img src="https://github.com/chakka-guna-sekhar-venkata-chennaiah/Mutli-Modal-RAG-ChaBot/assets/110555361/579ec611-4dd6-482f-9de0-c7de83e3f2f3" alt="Flowcharts (0)">
+</p>
 
 
 # 1. Introduction
