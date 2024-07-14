@@ -3,8 +3,9 @@
 <br>
 
 <p align="center">
-  <img src="https://github.com/chakka-guna-sekhar-venkata-chennaiah/Mutli-Modal-RAG-ChaBot/assets/110555361/579ec611-4dd6-482f-9de0-c7de83e3f2f3" alt="Flowcharts (0)">
+  <img src="https://github.com/user-attachments/assets/6f2bc880-fd32-41e1-b3b6-913e1592ff0a" alt="Flowcharts (0)">
 </p>
+
 
 
 # 1. Introduction
@@ -50,7 +51,7 @@ Imagine interacting with a system that understands and retrieves information acr
 </p>
 
 # 3. Tech Stack
-* 🧠 MindsDB Endpoints [mdb.ai](https://mdb.ai/models)
+* 🧠 MindsDB OpenAI Endpoint [mdb.ai](https://mdb.ai/models)
 * 🧩 Langchain
 * 🖥️ Streamlit 
 * 🗂️ FAISS
