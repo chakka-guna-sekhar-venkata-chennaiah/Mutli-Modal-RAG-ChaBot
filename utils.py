@@ -5,6 +5,7 @@ from langchain.prompts import PromptTemplate
 from langchain.embeddings.base import Embeddings
 from langchain.llms.base import LLM
 from pydantic import BaseModel, Field
+import streamlit as st
 
 
 client = OpenAI(
