@@ -9,7 +9,7 @@ st.set_page_config(layout="wide",initial_sidebar_state="expanded",
 
 
 
-page = st.sidebar.selectbox("Jump to... 👇", ["About", "MMR-PDF",'MMR-Video'])
+page = st.sidebar.selectbox("Jump to... 👇", ["About", "Demo","MMR-PDF",'MMR-Video'])
 
 
 if page=='About':
@@ -86,7 +86,15 @@ if page=='About':
     st.markdown(glowing_text_style, unsafe_allow_html=True)
     st.markdown(f'<p class="glowing-text"> 🤖 Multi-Modal RAG WebApp 🤖</p>', unsafe_allow_html=True)
     st.image('multimodal.png')
+    st.success("📣 I highly suggest 💡 you check out the 'demo' subpage 🌐 for a more comprehensive understanding 🧠 of the app and how to use it 📱. It's really helpful! 👍")
     
+
+elif page=='Demo':
+    st.markdown("""
+                <h1 align='center'>
+                📹 Check out the demo video below 👇</h1>
+                """,unsafe_allow_html=True)
+    st.video("demo/demo.mp4")
 elif page=='MMR-PDF':
     with st.sidebar:
         st.write("[Monuments-of-National-Importance PDF](https://eacpm.gov.in/wp-content/uploads/2023/01/Monuments-of-National-Importance.pdf)")
@@ -124,27 +132,48 @@ elif page=='MMR-PDF':
 
     if st.button("Submit"):
         
-        with st.chat_message("user"):
-            st.markdown(user_input)
+        col1,col2=st.columns(2)
 
-        # Get the answer
-        result, relevant_images = answer(user_input)
+        with col1:
+            st.success('Normal RAG')
+            with st.chat_message("user"):
+                st.markdown(user_input)
 
-        # Show the answer
-        with st.chat_message("assistant"):
-        
-            with st.spinner('🖊️ 🖊️ 🖊️...'):
-                time.sleep(2)
+            # Get the answer
+            result, relevant_images = answer(user_input)
 
-        st.markdown(result)
+            # Show the answer
+            with st.chat_message("assistant"):
+            
+                with st.spinner('🖊️ 🖊️ 🖊️...'):
+                    time.sleep(2)
 
-        if len(relevant_images)>0:
-            # Display a success message
-            st.success('Relevant Image Found....')
-            with st.spinner('📷 📷 📷...'):
-                time.sleep(2)
-            img_bytes = base64.b64decode(relevant_images[0])
-            st.image(img_bytes)
+            st.markdown(result)
+
+            
+        with col2:
+            st.success('Multi Modal RAG')
+            with st.chat_message("user"):
+                st.markdown(user_input)
+
+            # Get the answer
+            result, relevant_images = answer(user_input)
+
+            # Show the answer
+            with st.chat_message("assistant"):
+            
+                with st.spinner('🖊️ 🖊️ 🖊️...'):
+                    time.sleep(2)
+
+            st.markdown(result)
+
+            if len(relevant_images)>0:
+                # Display a success message
+                st.success('Relevant Frame Found....')
+                with st.spinner('📷 📷 📷...'):
+                    time.sleep(2)
+                img_bytes = base64.b64decode(relevant_images[0])
+                st.image(img_bytes)
 
 else:
     with st.sidebar:
@@ -181,27 +210,49 @@ else:
     user_input = st.text_area(label="Feel free to inquire about any information or topic present in the Video that is conveniently displayed on the sidebar to your left 👈.")
     if st.button("Submit"):
         
-        with st.chat_message("user"):
-            st.markdown(user_input)
+        col1,col2=st.columns(2)
 
-        # Get the answer
-        result, relevant_images = answer1(user_input)
+        with col1:
+            st.success('Normal RAG')
+            with st.chat_message("user"):
+                st.markdown(user_input)
 
-        # Show the answer
-        with st.chat_message("assistant"):
-        
-            with st.spinner('🖊️ 🖊️ 🖊️...'):
-                time.sleep(2)
+            # Get the answer
+            result, relevant_images = answer1(user_input)
 
-        st.markdown(result)
+            # Show the answer
+            with st.chat_message("assistant"):
+            
+                with st.spinner('🖊️ 🖊️ 🖊️...'):
+                    time.sleep(2)
 
-        if len(relevant_images)>0:
-            # Display a success message
-            st.success('Relevant Frame Found....')
-            with st.spinner('📷 📷 📷...'):
-                time.sleep(2)
-            img_bytes = base64.b64decode(relevant_images[0])
-            st.image(img_bytes)
+            st.markdown(result)
+
+            
+        with col2:
+            st.success('Multi Modal RAG')
+            with st.chat_message("user"):
+                st.markdown(user_input)
+
+            # Get the answer
+            result, relevant_images = answer1(user_input)
+
+            # Show the answer
+            with st.chat_message("assistant"):
+            
+                with st.spinner('🖊️ 🖊️ 🖊️...'):
+                    time.sleep(2)
+
+            st.markdown(result)
+
+            if len(relevant_images)>0:
+                # Display a success message
+                st.success('Relevant Frame Found....')
+                with st.spinner('📷 📷 📷...'):
+                    time.sleep(2)
+                img_bytes = base64.b64decode(relevant_images[0])
+                st.image(img_bytes)
+
 
 
         
