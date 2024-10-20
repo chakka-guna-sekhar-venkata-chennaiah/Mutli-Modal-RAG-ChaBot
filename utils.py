@@ -21,8 +21,8 @@ client = OpenAI(
 
 @st.cache_resource
 def load_jina_model():
-    tokenizer = AutoTokenizer.from_pretrained("jinaai/jina-embeddings-v2-base-en")
-    model = AutoModel.from_pretrained("jinaai/jina-embeddings-v2-base-en")
+    tokenizer = AutoTokenizer.from_pretrained("izhx/udever-bloom-1b1")
+    model = AutoModel.from_pretrained("izhx/udever-bloom-1b1")
     return tokenizer, model
 
 tokenizer, model = load_jina_model()
@@ -138,4 +138,3 @@ def answer1(question):
 
 
 
-#code completed
