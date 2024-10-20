@@ -135,3 +135,7 @@ def answer1(question):
             relevant_images.append(d.metadata['original_content'])
     result = get_llm_output(context, question)
     return result, relevant_images
+
+
+
+#code completed
