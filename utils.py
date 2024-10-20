@@ -8,6 +8,12 @@ from pydantic import BaseModel, Field
 import streamlit as st
 from sentence_transformers import SentenceTransformer
 
+
+client = OpenAI(
+    api_key=st.secrets['api_key'],
+    base_url="https://api.groq.com/openai/v1/models"
+)
+
 # Cache the model loading
 @st.cache(allow_output_mutation=True)
 def load_model():
@@ -49,7 +55,7 @@ class MDBChatLLM(LLM):
     def _llm_type(self) -> str:
         return "custom_mdb_chat"
 
-# Instantiate the embeddings and LLM classes
+# Instantiate the embeddings with the new model
 embeddings = MDBEmbeddings(model=model)  # Pass the SentenceTransformer model
 mdb_chat_llm = MDBChatLLM(client=client)
 
@@ -102,6 +108,7 @@ def answer1(question):
             relevant_images.append(d.metadata['original_content'])
     result = qa_chain.run({'context': context, 'question': question})
     return result, relevant_images
+
 
 
 
