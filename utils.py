@@ -15,7 +15,7 @@ client = OpenAI(
 )
 
 # Cache the model loading
-@st.cache(allow_output_mutation=True)
+@st.cache_data
 def load_model():
     return SentenceTransformer("all-MiniLM-L6-v2")
 
