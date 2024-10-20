@@ -6,31 +6,29 @@ from langchain.embeddings.base import Embeddings
 from langchain.llms.base import LLM
 from pydantic import BaseModel, Field
 import streamlit as st
+from sentence_transformers import SentenceTransformer
 
+# Cache the model loading
+@st.cache(allow_output_mutation=True)
+def load_model():
+    return SentenceTransformer("all-MiniLM-L6-v2")
 
-client = OpenAI(
-    api_key=st.secrets['api_key'],
-    base_url="https://api.groq.com/openai/v1/models"
-)
+# Instantiate the embeddings with the cached model
+model = load_model()
 
 class MDBEmbeddings(Embeddings):
-    def __init__(self, client):
+    def __init__(self, model):
         super().__init__()
-        self.client = client
+        self.model = model  # Use the SentenceTransformer model
 
     def embed_query(self, text):
-        response = self.client.embeddings.create(
-            model="text-embedding-ada-002",
-            input=text,
-            encoding_format="float"
-        )
-        return response.data[0].embedding
+        return self.model.encode(text, convert_to_tensor=True).tolist()  # Use SentenceTransformer for embedding
 
     def __call__(self, text):
         return self.embed_query(text)
 
     def embed_documents(self, texts):
-        return [self.embed_query(text) for text in texts]
+        return self.model.encode(texts, convert_to_tensor=True).tolist()  # Use SentenceTransformer for embedding
 
 class MDBChatLLM(LLM):
     client: OpenAI = Field(...)
@@ -52,7 +50,7 @@ class MDBChatLLM(LLM):
         return "custom_mdb_chat"
 
 # Instantiate the embeddings and LLM classes
-embeddings = MDBEmbeddings(client=client)
+embeddings = MDBEmbeddings(model=model)  # Pass the SentenceTransformer model
 mdb_chat_llm = MDBChatLLM(client=client)
 
 # Load the FAISS index with custom embeddings
@@ -104,5 +102,6 @@ def answer1(question):
             relevant_images.append(d.metadata['original_content'])
     result = qa_chain.run({'context': context, 'question': question})
     return result, relevant_images
+
 
 
