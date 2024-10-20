@@ -8,62 +8,45 @@ from pydantic import BaseModel, Field
 import streamlit as st
 from sentence_transformers import SentenceTransformer
 
-
+# Initialize the OpenAI client
 client = OpenAI(
-    api_key=st.secrets['api_key'],
-    base_url="https://api.groq.com/openai/v1/models"
+    api_key="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",  # Replace with your actual API key
+    base_url="https://api.groq.com/openai/v1"
 )
 
 # Cache the model loading
-@st.cache_data
+@st.cache_resource
 def load_model():
     return SentenceTransformer("all-MiniLM-L6-v2")
 
-# Instantiate the embeddings with the cached model
+# Load the model
 model = load_model()
 
-class MDBEmbeddings(Embeddings):
-    def __init__(self, model):
-        super().__init__()
-        self.model = model  # Use the SentenceTransformer model
+# Define custom embedding function
+def custom_embedding_function(texts):
+    return model.encode(texts)
 
-    def embed_query(self, text):
-        return self.model.encode(text, convert_to_tensor=True).tolist()  # Use SentenceTransformer for embedding
-
-    def __call__(self, text):
-        return self.embed_query(text)
-
+# Create a custom Embeddings class
+class CustomEmbeddings(Embeddings):
     def embed_documents(self, texts):
-        return self.model.encode(texts, convert_to_tensor=True).tolist()  # Use SentenceTransformer for embedding
+        return custom_embedding_function(texts)
+    
+    def embed_query(self, text):
+        return custom_embedding_function([text])[0]
 
-class MDBChatLLM(LLM):
-    client: OpenAI = Field(...)
+# Instantiate the embeddings
+embeddings = CustomEmbeddings()
 
-    def __init__(self, client):
-        super().__init__()
-        self.client = client
+# Load the FAISS indexes with custom embeddings
+@st.cache_resource
+def load_faiss_indexes():
+    db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
+    db1 = FAISS.load_local("faiss_index_audio", embeddings, allow_dangerous_deserialization=True)
+    return db, db1
 
-    def _call(self, prompt, **kwargs):
-        completion = self.client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": prompt}],
-            stream=False
-        )
-        return completion.choices[0].message.content
+db, db1 = load_faiss_indexes()
 
-    @property
-    def _llm_type(self) -> str:
-        return "custom_mdb_chat"
-
-# Instantiate the embeddings with the new model
-embeddings = MDBEmbeddings(model=model)  # Pass the SentenceTransformer model
-mdb_chat_llm = MDBChatLLM(client=client)
-
-# Load the FAISS index with custom embeddings
-db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
-db1 = FAISS.load_local("faiss_index_audio", embeddings, allow_dangerous_deserialization=True)
-
-# Define the prompt template for the LLMChain
+# Define the prompt template
 prompt_template = """
 You are an assistant tasked with summarizing tables and text.
 Give a concise summary of the table or text.
@@ -75,8 +58,18 @@ Just return the helpful answer in as much detail as possible.
 Answer:
 """
 
-# Setup the LLMChain with the custom chat model
-qa_chain = LLMChain(llm=mdb_chat_llm, prompt=PromptTemplate.from_template(prompt_template))
+def get_llm_output(context, question):
+    formatted_prompt = prompt_template.format(context=context, question=question)
+    
+    completion = client.chat.completions.create(
+        model="gemma-7b-it",  
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": formatted_prompt}
+        ]
+    )
+    
+    return completion.choices[0].message.content
 
 # Define the answer function to handle queries
 def answer(question):
@@ -91,9 +84,9 @@ def answer(question):
         elif d.metadata['type'] == 'image':
             context += '[image]' + d.page_content
             relevant_images.append(d.metadata['original_content'])
-    result = qa_chain.run({'context': context, 'question': question})
+            
+    result = get_llm_output(context, question)
     return result, relevant_images
-
 
 # Query the vectorstore
 def answer1(question):
@@ -106,9 +99,5 @@ def answer1(question):
         elif d.metadata['type'] == 'image':
             context += '[image]' + d.page_content
             relevant_images.append(d.metadata['original_content'])
-    result = qa_chain.run({'context': context, 'question': question})
+    result = get_llm_output(context, question)
     return result, relevant_images
-
-
-
-
