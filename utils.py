@@ -13,7 +13,7 @@ from transformers import AutoTokenizer, AutoModel
 
 # Initialize the OpenAI client
 client = OpenAI(
-    api_key="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",  # Replace with your actual API key
+    api_key=st.secrets['api_key'],  
     base_url="https://api.groq.com/openai/v1"
 )
 
