@@ -1,11 +1,8 @@
 import base64
 import streamlit as st
 import time
-from utils import answer,answer1
+from utils import answer, answer1
 
-
-st.set_page_config(layout="wide",initial_sidebar_state="expanded",
-                   page_icon='🤖',page_title='Mutli-Modal RAG WebApp')
 
 
 

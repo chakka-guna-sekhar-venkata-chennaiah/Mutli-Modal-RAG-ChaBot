@@ -6,7 +6,10 @@ from langchain.embeddings.base import Embeddings
 from langchain.llms.base import LLM
 from pydantic import BaseModel, Field
 import streamlit as st
+import numpy as np
 from sentence_transformers import SentenceTransformer
+import torch
+from transformers import AutoTokenizer, AutoModel
 
 # Initialize the OpenAI client
 client = OpenAI(
@@ -14,30 +17,60 @@ client = OpenAI(
     base_url="https://api.groq.com/openai/v1"
 )
 
-# Cache the model loading
+
+
 @st.cache_resource
-def load_model():
-    return SentenceTransformer("all-MiniLM-L6-v2")
+def load_jina_model():
+    tokenizer = AutoTokenizer.from_pretrained("jinaai/jina-embeddings-v2-base-en")
+    model = AutoModel.from_pretrained("jinaai/jina-embeddings-v2-base-en")
+    return tokenizer, model
 
-# Load the model
-model = load_model()
+tokenizer, model = load_jina_model()
 
-# Define custom embedding function
-def custom_embedding_function(texts):
-    return model.encode(texts)
+def get_jina_embeddings(texts, model, tokenizer):
+    # Tokenize the input texts
+    inputs = tokenizer(texts, padding=True, truncation=True, return_tensors="pt", max_length=512)
+    
+    # Generate embeddings
+    with torch.no_grad():
+        outputs = model(**inputs)
+    
+    # Use the [CLS] token embeddings as sentence embeddings
+    embeddings = outputs.last_hidden_state[:, 0, :].numpy()
+    
+    # Normalize the embeddings
+    embeddings = embeddings / np.linalg.norm(embeddings, axis=1, keepdims=True)
+    
+    return embeddings
 
-# Create a custom Embeddings class
-class CustomEmbeddings(Embeddings):
+def upscale_embedding(embedding, target_dim=1536):
+    """Upscale embedding to target dimensions."""
+    if len(embedding) >= target_dim:
+        return embedding[:target_dim]  # Truncate if larger
+    
+    # Calculate scaling factor
+    scale = target_dim / len(embedding)
+    
+    # Use linear interpolation to upscale
+    upscaled = np.interp(
+        np.linspace(0, len(embedding) - 1, target_dim),
+        np.arange(len(embedding)),
+        embedding
+    )
+    
+    return upscaled
+
+class JinaEmbeddings(Embeddings):
     def embed_documents(self, texts):
-        return custom_embedding_function(texts)
+        embeddings = get_jina_embeddings(texts, model, tokenizer)
+        return np.array([upscale_embedding(emb) for emb in embeddings])
     
     def embed_query(self, text):
-        return custom_embedding_function([text])[0]
+        embedding = get_jina_embeddings([text], model, tokenizer)[0]
+        return upscale_embedding(embedding)
 
-# Instantiate the embeddings
-embeddings = CustomEmbeddings()
+embeddings = JinaEmbeddings()
 
-# Load the FAISS indexes with custom embeddings
 @st.cache_resource
 def load_faiss_indexes():
     db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
@@ -45,6 +78,7 @@ def load_faiss_indexes():
     return db, db1
 
 db, db1 = load_faiss_indexes()
+
 
 # Define the prompt template
 prompt_template = """
