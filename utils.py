@@ -10,7 +10,7 @@ import streamlit as st
 
 client = OpenAI(
     api_key=st.secrets['api_key'],
-    base_url="https://llm.mdb.ai/"
+    base_url="https://api.groq.com/openai/v1/models"
 )
 
 class MDBEmbeddings(Embeddings):
