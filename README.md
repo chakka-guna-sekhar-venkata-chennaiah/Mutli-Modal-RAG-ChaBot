@@ -75,6 +75,7 @@ First, clone the repository to your local machine:
 git clone https://github.com/chakka-guna-sekhar-venkata-chennaiah/Mutli-Modal-RAG-ChaBot.git
 ```
 
+
 ### Step 2: Navigate to the Repository
 Change into the repository directory:
 ```bash
